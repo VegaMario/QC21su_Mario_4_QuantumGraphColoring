@@ -163,8 +163,8 @@ def plot_graph(sample, nodes, edges, colors):
 def main():
     nodes = read_nodes("nodes.txt")  # get the nodes
     edges = read_edges("edges.txt")  # get the edges
-
-    QUBO, offset = gen_QUBO(nodes, edges, 5, 10)  # create the QUBO: gen_QUBO(nodes, edges, colors, gamma)
+    colors = 5
+    QUBO, offset = gen_QUBO(nodes, edges, colors, 10)  # create the QUBO: gen_QUBO(nodes, edges, colors, gamma)
 
     sampler = neal.SimulatedAnnealingSampler()  # we are using the neal simulated annealer
     bqm = qubo_to_bqm(QUBO, offset)  # convert our QUBO to a BQM
@@ -174,7 +174,7 @@ def main():
     print(sampleset.first.energy)
     print(sampleset.first.sample)
     check_soln(sample, edges)  # check the solution for errors
-    plot_graph(sample, nodes, edges, 5)  # plot it
+    plot_graph(sample, nodes, edges, colors)  # plot it
 
 
 if __name__ == '__main__':
