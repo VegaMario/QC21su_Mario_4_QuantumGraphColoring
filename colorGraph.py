@@ -175,11 +175,13 @@ def random_graph(numnodes, numedges):
             num2 = np.random.randint(0, numnodes)
         edges.append((str(num1), str(num2)))
 
-    print("Random Nodes: {}".format(nodes))
+    edges_fix = set(edges)
 
-    print("Random Edges: {}".format(edges))
+    for i in range(len(edges)):
+        if {(edges[i][0], edges[i][1])}.issubset(edges_fix) and {(edges[i][1], edges[i][0])}.issubset(edges_fix):
+            edges_fix.remove((edges[i][1], edges[i][0]))
 
-    return nodes, edges  # return the list of nodes and edges
+    return nodes, list(edges_fix)  # return the list of nodes and edges
 
 
 # main function
@@ -187,7 +189,7 @@ def main():
     # nodes = read_nodes("nodes.txt")  # get the nodes
     # edges = read_edges("edges.txt")  # get the edges
 
-    nodes, edges = random_graph(75, 85)  # generate a random graph with nodes and edges
+    nodes, edges = random_graph(5, 7)  # generate a random graph with nodes and edges
     colors = 5  # how many colors to use
     QUBO, offset = gen_QUBO(nodes, edges, colors, 10)  # create the QUBO: gen_QUBO(nodes, edges, colors, gamma)
 
@@ -199,6 +201,8 @@ def main():
     print(sampleset.first.energy)
     print(sampleset.first.sample)
     check_soln(sample, edges)  # check the solution for errors
+    print("{} Random Nodes: {}".format(len(nodes), nodes))
+    print("{} Random Nodes: {}".format(len(edges), edges))
 
     plot_graph(sample, nodes, edges, colors)  # plot it
 
