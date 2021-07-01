@@ -159,11 +159,36 @@ def plot_graph(sample, nodes, edges, colors):
     plt.show()
 
 
+# generate a random graph with nodes and edges
+def random_graph(numnodes, numedges):
+    nodes = []  # will store the nodes
+    edges = []  # will store the edges
+
+    for i in range(numnodes):  # fill in the nodes list
+        nodes.append(str(i))
+
+    for i in range(numedges):  # fill in the edges list
+        num1 = np.random.randint(0, numnodes)
+        num2 = np.random.randint(0, numnodes)
+        while num1 == num2:  # edges can't connect to the same node
+            num1 = np.random.randint(0, numnodes)
+            num2 = np.random.randint(0, numnodes)
+        edges.append((str(num1), str(num2)))
+
+    print("Random Nodes: {}".format(nodes))
+
+    print("Random Edges: {}".format(edges))
+
+    return nodes, edges  # return the list of nodes and edges
+
+
 # main function
 def main():
-    nodes = read_nodes("nodes.txt")  # get the nodes
-    edges = read_edges("edges.txt")  # get the edges
-    colors = 5
+    # nodes = read_nodes("nodes.txt")  # get the nodes
+    # edges = read_edges("edges.txt")  # get the edges
+
+    nodes, edges = random_graph(75, 85)  # generate a random graph with nodes and edges
+    colors = 5  # how many colors to use
     QUBO, offset = gen_QUBO(nodes, edges, colors, 10)  # create the QUBO: gen_QUBO(nodes, edges, colors, gamma)
 
     sampler = neal.SimulatedAnnealingSampler()  # we are using the neal simulated annealer
@@ -174,6 +199,7 @@ def main():
     print(sampleset.first.energy)
     print(sampleset.first.sample)
     check_soln(sample, edges)  # check the solution for errors
+
     plot_graph(sample, nodes, edges, colors)  # plot it
 
 
