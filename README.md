@@ -19,7 +19,7 @@ s represents the node and c represents the color. Keep in mind that any pair of 
 ### How to run the program
 D-Wave Ocean sdk and matplotlib are required. 
 
-    1. Modify the nodes.txt and edges.txt files following the same format shown, or just use the random_graph function to generate a random graph. 
+    1. Modify the nodes.txt and edges.txt files following the same format shown, or just use the random_graph function in colorGraph.py to generate a random graph. 
     2. To modify the number of colors used, go to colorGraph.py file and modify the colors variable to the value you want 
                     
 
